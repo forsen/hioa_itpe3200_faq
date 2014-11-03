@@ -88,6 +88,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\App\index.html" />
     <Content Include="Scripts\LibJS\angular.min.js" />
     <Content Include="Scripts\LibJS\angular.min.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -121,7 +122,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\App\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
