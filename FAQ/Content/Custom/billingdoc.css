@@ -1,0 +1,10 @@
+﻿.a4 {
+    outline: 1px solid black;
+    min-height: 800px; 
+    position:relative;
+}
+.foten{
+    position:absolute;
+    width:100%;
+    bottom:0;
+}

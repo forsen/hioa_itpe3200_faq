@@ -1,14 +1,104 @@
 ﻿<!DOCTYPE html>
 <html ng-app="faq">
 <head>
+    <link href="../../Content/Custom/customNav.css" rel="stylesheet" />
+    <link href="../../Content/Custom/MainSheet.css" rel="stylesheet" />
+    <link href="../../Content/Custom/SideMenu.css" rel="stylesheet" />
     <script src="../LibJS/jquery-2.1.1.min.js"></script>
     <script src="../LibJS/angular.min.js"></script>
     <script src="../LibJS/bootstrap.min.js"></script>
     <link href="../../Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="questionController.js"></script>
+    <script src="categoryController.js"></script>
     <title>Hello World</title>
 </head>
-<body>
-    Hello world!
+<body ng-controller="controller">
+    <div class="container">
+        <div class="navbar navbar-inner" role="navigation" style="margin-bottom:0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="row">
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <a href="#" id="homeLink"><img src="../../Content/img/logo/snublevann_light_transparent.png" id="logo" width="500" height="96" style="margin-top: 20px; margin-left:20px" /></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="navUl pull-right">
+                                <a href="#" ng-click="showNewQuestionForm()">link1</a>
+                                <a href="#">link2</a>
+                                <a href="#">link3</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="panel panel-default pull-left" style="position:absolute; margin-top:0px; background:#180d00; border:0">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <div id="menu_container">
+                                <div id="sidemenu">
+                                    <h4>Kategorier</h4>
+
+                                    <div class="item" ng-repeat="category in categories">
+                                        <a class="sub" ng-click="showCategory(category.id)">{{category.name}}</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="jumbotron">
+                    <div ng-show="showForm">
+                        <form name="newquestionform">
+                            <div class="form-group">
+                                <label>Spørsmål</label>
+                                <input class="form-control" name="question" ng-model="question" ng-required="true" />
+                                <p class="label label-info" ng-show="newquestionform.question.$invalid && newquestionform.question.$dirty">Spørsmålet inneholder ulovlige tegn</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select class="form-control input-lg" name="category" ng-model="category" ng-options="category.name for category in categories">
+                                    <option value="">--velg en kategori--</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>E-post</label>
+                                <input class="form-control" name="email" ng-model="email" ng-required="true" ng-pattern="/^[aAbB]$/" />
+                                <p class="label label-info" ng-show="newquestionform.email.$invalid && newquestionform.email.$dirty">Feil i epost</p>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" ng-click="saveNewQuestion()" ng-disabled="newquestionform.$invalid">Send spørsmål</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div ng-show="tha"
+                </div>
+                <div class="row">
+                    <div class="footer">
+                        <div class="jumbotron footerjumbo">
+                            Copyright &copy; 2014 Snublevann - All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space" style="width:100%; height:10px"></div>
 </body>
 </html>

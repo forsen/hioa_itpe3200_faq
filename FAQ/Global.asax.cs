@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Routing;
 using FAQ.Models;
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace FAQ
 {
@@ -19,7 +20,8 @@ namespace FAQ
             using(var db = new DatabaseContext())
             {
                 {
-                    db.Database.Initialize(true); 
+                    db.Database.Initialize(true);
+                    Debug.WriteLine("blah");
                 }
             }
         }
