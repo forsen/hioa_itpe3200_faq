@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 
 namespace FAQ.Controllers
 {
+    [RoutePrefix("api/Question")]
     public class QuestionController : ApiController
     {
         DBQuestion db = new DBQuestion(); 
@@ -19,6 +20,32 @@ namespace FAQ.Controllers
         public HttpResponseMessage Get()
         {
             List<Question> allQuestions = db.getAllQuestions(null);
+
+            var Json = new JavaScriptSerializer();
+            string JsonString = Json.Serialize(allQuestions);
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonString, Encoding.UTF8, "application/json"),
+                StatusCode = HttpStatusCode.OK
+            };
+        }
+
+        public HttpResponseMessage Get(int id)
+        {
+            Question question = db.getQuestion(id);
+
+            var Json = new JavaScriptSerializer();
+            string JsonString = Json.Serialize(question);
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonString, Encoding.UTF8, "application/json"),
+                StatusCode = HttpStatusCode.OK
+            };
+        }
+        [Route("cat/{categoryid}")]
+        public HttpResponseMessage GetQuestionByCategory(int categoryid)
+        {
+            List<Question> allQuestions = db.getAllQuestions(categoryid);
 
             var Json = new JavaScriptSerializer();
             string JsonString = Json.Serialize(allQuestions);

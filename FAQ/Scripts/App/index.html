@@ -8,7 +8,7 @@
     <script src="../LibJS/angular.min.js"></script>
     <script src="../LibJS/bootstrap.min.js"></script>
     <link href="../../Content/bootstrap.min.css" rel="stylesheet" />
-    <script src="categoryController.js"></script>
+    <script src="controller.js"></script>
     <title>Hello World</title>
 </head>
 <body ng-controller="controller">
@@ -73,22 +73,39 @@
                             </div>
                             <div class="form-group">
                                 <label>Kategori</label>
-                                <select class="form-control input-lg" name="category" ng-model="category" ng-options="category.name for category in categories">
+                                <select class="form-control input-lg" name="category" ng-model="category" ng-options="category.name for category in categories" ng-required="true">
                                     <option value="">--velg en kategori--</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>E-post</label>
-                                <input class="form-control" name="email" ng-model="email" ng-required="true" ng-pattern="/^[aAbB]$/" />
+                                <input class="form-control" name="email" ng-model="email" ng-required="true" ng-pattern="/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/" />
                                 <p class="label label-info" ng-show="newquestionform.email.$invalid && newquestionform.email.$dirty">Feil i epost</p>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary" ng-click="saveNewQuestion()" ng-disabled="newquestionform.$invalid">Send spørsmål</button>
                             </div>
                         </form>
+
                     </div>
-                    <div ng-show="tha"
+                    <div class="panel-default panel col-md-6 col-md-offset-3" ng-show="showThanks">
+                        <h2>Takk for ditt spørsmål</h2>
+                        <p>Spørsmålet er blitt sendt til vår kundeavdeling. Du vil få svar på e-posten du oppga i løpet av 48 timer.</p>
+                        <p>Det er muligheter for at ditt spørsmål og vårt svar vil bli lagt ut på vår FAQ dersom vi mener at spørsmålet kan ha relevans for andre. Du vil selvfølgelig bli anonymisert.</p>
+                        <p>Med vennlig hilsen Snublevann.no</p>
+                        <p>aoesntuh</p>
+
+                    </div>
+                    <div class="panel-default panel col-md-12" ng-show="showFAQ">
+                        <div ng-repeat="question in questions">
+                            <p>{{question.question}}</p>
+                            <p>{{question.answer}}</p>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+
                 </div>
+
                 <div class="row">
                     <div class="footer">
                         <div class="jumbotron footerjumbo">

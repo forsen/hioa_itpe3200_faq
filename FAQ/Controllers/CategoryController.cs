@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 
 namespace FAQ.Controllers
 {
+   
     public class CategoryController : ApiController
     {
         DBCategory db = new DBCategory(); 

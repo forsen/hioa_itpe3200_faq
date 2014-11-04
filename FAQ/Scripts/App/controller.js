@@ -1,14 +1,14 @@
 ﻿var App = angular.module("faq", []);
 
 App.controller("controller", function ($scope, $http) {
-    var categoryUrl = '/api/Category';
-
-    $scope.showForm = false;
+    var categoryUrl = '/api/Category/';
+    var questionUrl = '/api/Question/';
+    var questionByCatUrl = '/api/Question/cat/';
+    hideAll();
     function getAllCategories() {
         $http.get(categoryUrl).
         success(function (allCategories) {
             $scope.categories = allCategories;
-            $scope.loading = false;
         }).
         error(function (data, status) {
             console.log(status + data);
@@ -16,12 +16,13 @@ App.controller("controller", function ($scope, $http) {
     };
     getAllCategories();
 
-    var questionUrl = '/api/Question/';
+    
     
     $scope.showNewQuestionForm = function () {
         $scope.question = "";
         $scope.email = "";
         $scope.newquestionform.$setPristine();
+        hideAll();
         $scope.showForm = true;
     };
 
@@ -35,7 +36,7 @@ App.controller("controller", function ($scope, $http) {
         $http.post(questionUrl, question)
             .success(function (data) {
                 // noe 
-                $scope.showForm = false;
+                hideAll();
                 $scope.showThanks = true;
 
             })
@@ -43,4 +44,23 @@ App.controller("controller", function ($scope, $http) {
                 console.log(status + data);
             });
     };
+
+    $scope.showCategory = function (id) {
+        hideAll();
+        $http.get(questionByCatUrl + id)
+        .success(function (questionsByCat) {
+            $scope.questions = questionsByCat;
+            $scope.showFAQ = true;
+        })
+        .error(function (data, status) {
+            console.log(status + data);
+        });
+    };
+
+    function hideAll() {
+        $scope.showForm = false;
+        $scope.showThanks = false;
+        $scope.showFAQ = false;
+        $scope.showLoading = false;
+    }
 });

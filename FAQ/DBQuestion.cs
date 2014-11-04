@@ -24,6 +24,21 @@ namespace FAQ
             return allQuestions; 
         }
 
+        public Question getQuestion(int id)
+        {
+            Questions que = db.Questions.FirstOrDefault(q => q.Id == id);
+            return new Question()
+            {
+                id = que.Id,
+                answer = que.Answers.Answer,
+                asked = que.Asked,
+                category = que.Categories.Name,
+                categoryid = que.CategoriesId,
+                email = que.Email,
+                question = que.Question
+            };
+        }
+
         public bool saveNewQuestion(Question q)
         {
             Questions newQuestion = new Questions()
