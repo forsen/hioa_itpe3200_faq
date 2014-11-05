@@ -26,7 +26,7 @@ namespace FAQ
 
         public Question getQuestion(int id)
         {
-            Questions que = db.Questions.FirstOrDefault(q => q.Id == id);
+            Questions que = db.Questions.Include("Categories").Include("Answers").FirstOrDefault(q => q.Id == id);
             return new Question()
             {
                 id = que.Id,

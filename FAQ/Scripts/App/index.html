@@ -33,7 +33,7 @@
                         <div class="col-sm-12 col-md-12">
                             <div class="navUl pull-right">
                                 <a href="#" ng-click="showNewQuestionForm()">link1</a>
-                                <a href="#">link2</a>
+                                <a href="#" ng-click="showFAQFunction()">link2</a>
                                 <a href="#">link3</a>
                             </div>
                         </div>
@@ -44,7 +44,8 @@
     </div>
     <div class="container body-content">
         <div class="row">
-            <div class="col-md-2">
+           <!--
+             <div class="col-md-2">
                 <div class="panel panel-default pull-left" style="position:absolute; margin-top:0px; background:#180d00; border:0">
                     <div class="panel-body">
                         <div class="pull-left">
@@ -62,7 +63,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+               -->
+            <div class="col-md-12">
                 <div class="jumbotron">
                     <div ng-show="showForm">
                         <form name="newquestionform">
@@ -97,11 +99,25 @@
 
                     </div>
                     <div class="panel-default panel col-md-12" ng-show="showFAQ">
-                        <div ng-repeat="question in questions">
-                            <p>{{question.question}}</p>
-                            <p>{{question.answer}}</p>
+                        <div class="row" ng-repeat="categories in rowhack">
+                            <div ng-repeat="category in categories" class="col-md-6">
+                                <h3>{{category.name}}</h3>
+                                    
+                                <div ng-repeat="q in category.questions"> 
+                                    <a href="#" ng-click="showQuestionFunction(q.Id)">{{q.Question}}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="panel-default panel col-md-12" ng-show="showLoading">
+                        <p>Laster inn data...</p>
+                    </div>
+                    <div class="panel-default panel col-md-12" ng-show="showQuestion">
+                        <h3>{{question.question}}</h3>
+                        <p>{{question.answer}}</p>
+                    </div>
+
+                    
                     <div class="row"></div>
 
                 </div>

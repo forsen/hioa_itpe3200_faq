@@ -8,13 +8,18 @@ App.controller("controller", function ($scope, $http) {
     function getAllCategories() {
         $http.get(categoryUrl).
         success(function (allCategories) {
-            $scope.categories = allCategories;
+            $scope.showLoading = false; 
+
+            $scope.rowhack = [];
+            while (allCategories.length) {
+                $scope.rowhack.push(allCategories.splice(0, 2))
+            }
         }).
         error(function (data, status) {
             console.log(status + data);
         });
     };
-    getAllCategories();
+    
 
     
     
@@ -24,6 +29,7 @@ App.controller("controller", function ($scope, $http) {
         $scope.newquestionform.$setPristine();
         hideAll();
         $scope.showForm = true;
+
     };
 
     $scope.saveNewQuestion = function () {
@@ -44,8 +50,34 @@ App.controller("controller", function ($scope, $http) {
                 console.log(status + data);
             });
     };
+    $scope.showFAQFunction = function () {
 
-    $scope.showCategory = function (id) {
+        hideAll();
+        $scope.showLoading = true;
+        getAllCategories();
+
+        $scope.showFAQ = true;
+
+
+    }
+
+    $scope.showQuestionFunction = function (id) {
+        hideAll();
+        $scope.showLoading = true;
+        $http.get(questionUrl+id)
+            .success(function (data){
+                $scope.showLoading = false,
+                $scope.question = data,
+                $scope.showQuestion = true
+            })
+            .error(function(data,status){
+                console.log(status + data)
+            });
+    };
+
+
+/*
+    $scope.showCategoryFunction = function (id) {
         hideAll();
         $http.get(questionByCatUrl + id)
         .success(function (questionsByCat) {
@@ -56,11 +88,12 @@ App.controller("controller", function ($scope, $http) {
             console.log(status + data);
         });
     };
-
+    */
     function hideAll() {
         $scope.showForm = false;
         $scope.showThanks = false;
         $scope.showFAQ = false;
         $scope.showLoading = false;
+        $scope.showQuestion = false;
     }
 });
