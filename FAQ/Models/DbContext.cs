@@ -23,11 +23,11 @@ namespace FAQ.Models
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Entity<Answers>()
-                .HasRequired(a => a.Questions)
-                .WithOptional(q => q.Answers);
+                .HasRequired(a => a.Question)
+                .WithOptional(q => q.Answer);
             modelBuilder.Entity<Questions>()
-                .HasOptional(pi => pi.Answers )
-                .WithRequired(lu => lu.Questions);
+                .HasOptional(pi => pi.Answer )
+                .WithRequired(lu => lu.Question);
         }
 
     }
@@ -46,10 +46,11 @@ namespace FAQ.Models
         public int Id { get; set; }
         public DateTime Asked { get; set; }
         public String Question { get; set; }
-        public Answers Answers { get; set; }
+        public Answers Answer { get; set; }
         public String Email { get; set; }
-        public int CategoriesId { get; set; }
-        public Categories Categories { get; set; }
+        public int CategoryId { get; set; }
+        public Categories Category { get; set; }
+        public int UpVotes { get; set; }
 
     }
 
@@ -60,6 +61,6 @@ namespace FAQ.Models
         public DateTime Answered { get; set; }
         public int UserId { get; set; }
         public String Answer { get; set; }
-        public Questions Questions { get; set; }
+        public Questions Question { get; set; }
     }
 }

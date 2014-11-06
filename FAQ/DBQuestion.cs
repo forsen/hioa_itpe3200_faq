@@ -11,14 +11,34 @@ namespace FAQ
         DatabaseContext db = new DatabaseContext(); 
         public List<Question> getAllQuestions(int? category)
         {
-            List<Question> allQuestions = db.Questions.Where(q => q.CategoriesId == category).Select(p => new Question()
+            List<Question> allQuestions; 
+            if(category == null)
+            {
+                allQuestions = db.Questions.Where(c=>c.Answer != null).Select(p => new Question()
+                {
+                    id = p.Id,
+                    answer = p.Answer,
+                    asked = p.Asked,
+                    categoryid = p.CategoryId,
+                    categoryname = p.Category.Name,
+                    email = p.Email,
+                    question = p.Question,
+                    upvotes = p.UpVotes
+                }).ToList();
+
+                return allQuestions; 
+            }
+
+            allQuestions = db.Questions.Where(q => q.CategoryId == category && q.Answer != null).Select(p => new Question()
             {
                 id = p.Id,
-                answer = p.Answers.Answer,
+                answer = p.Answer,
                 asked = p.Asked,
-                category = p.Categories.Name,
+                categoryid= p.CategoryId,
+                categoryname = p.Category.Name,
                 email = p.Email,
-                question = p.Question
+                question = p.Question,
+                upvotes = p.UpVotes
             }).ToList();
 
             return allQuestions; 
@@ -26,27 +46,28 @@ namespace FAQ
 
         public Question getQuestion(int id)
         {
-            Questions que = db.Questions.Include("Categories").Include("Answers").FirstOrDefault(q => q.Id == id);
+            Questions que = db.Questions.Include("Category").FirstOrDefault(q => q.Id == id);
             return new Question()
             {
                 id = que.Id,
-                answer = que.Answers.Answer,
+                answer = que.Answer,
                 asked = que.Asked,
-                category = que.Categories.Name,
-                categoryid = que.CategoriesId,
+                categoryname = que.Category.Name,
+                categoryid = que.CategoryId,
                 email = que.Email,
-                question = que.Question
+                question = que.Question,
+                upvotes = que.UpVotes
             };
         }
 
-        public bool saveNewQuestion(Question q)
+        public bool saveNewQuestion(Question inQuestion)
         {
             Questions newQuestion = new Questions()
             {
-                Asked = q.asked,
-                Email = q.email,
-                Question = q.question,
-                CategoriesId = q.categoryid
+                Asked = inQuestion.asked,
+                Email = inQuestion.email,
+                Question = inQuestion.question,
+                CategoryId = inQuestion.categoryid
             };
             try
             {
@@ -58,6 +79,33 @@ namespace FAQ
                 return false; 
             }
             return true;
+        }
+        public bool updateQuestion(int id, Question inQuestion)
+        {
+            Questions updatedQuestion = db.Questions.FirstOrDefault(k => k.Id == id);
+            if (updatedQuestion == null)
+                return false;
+            
+            //updatedQuestion.Answer = inQuestion.answer;
+            updatedQuestion.Asked = inQuestion.asked;
+            updatedQuestion.CategoryId = inQuestion.categoryid;
+            updatedQuestion.Email = inQuestion.email;
+            updatedQuestion.Question = inQuestion.question;
+            updatedQuestion.UpVotes = inQuestion.upvotes;
+            
+
+            
+            
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+            return true; 
+
         }
     }
 }

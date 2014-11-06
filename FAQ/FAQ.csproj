@@ -123,9 +123,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DbContext.cs" />
-    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\DomainModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

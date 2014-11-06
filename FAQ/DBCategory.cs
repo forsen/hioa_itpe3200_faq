@@ -16,7 +16,17 @@ namespace FAQ
                 {
                     id = c.Id,
                     name = c.Name,
-                    questions = c.Questions
+                    questions = c.Questions.Where(p=>p.Answer != null).Select(s => new Question()
+                    {
+                        id = s.Id,
+                        question = s.Question,
+                        answer = s.Answer,
+                        asked = s.Asked,
+                        categoryid = c.Id,
+                        categoryname = c.Name,
+                        email = s.Email,
+                        upvotes = s.UpVotes
+                    }).ToList()
                 }).ToList();
             return allCategories;
         }

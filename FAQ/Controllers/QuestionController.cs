@@ -46,7 +46,7 @@ namespace FAQ.Controllers
         public HttpResponseMessage GetQuestionByCategory(int categoryid)
         {
             List<Question> allQuestions = db.getAllQuestions(categoryid);
-
+            allQuestions = allQuestions.OrderByDescending(c => c.upvotes).ToList();
             var Json = new JavaScriptSerializer();
             string JsonString = Json.Serialize(allQuestions);
             return new HttpResponseMessage()
@@ -80,5 +80,24 @@ namespace FAQ.Controllers
                 StatusCode = HttpStatusCode.Forbidden
             };
         }
+
+        public HttpResponseMessage Put(int id, Question inQuestion)
+        {
+            if(ModelState.IsValid)
+            {
+                bool ok = db.updateQuestion(id, inQuestion);
+                if (ok)
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK
+                    };
+            }
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound
+            };
+        }
+
     }
 }

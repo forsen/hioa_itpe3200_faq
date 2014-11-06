@@ -12,13 +12,29 @@ namespace FAQ.Models
         public DateTime asked { get; set; }
         [Required]
         public String question { get; set; }
-        public String answer { get; set; }
+        public Answers answer { get; set; }
         [Required]
         [RegularExpression("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")]
         public String email { get; set; }
         [Required]
         [RegularExpression("^[1-9]+[0-9]*")]
         public int categoryid { get; set; }
-        public String category { get; set; }
+        public String categoryname { get; set; }
+        public int upvotes { get; set; }
+    }
+
+    public class Category
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public List<Question> questions { get; set; }
+    }
+
+    public class Answer
+    {
+        public int id { get; set; }
+        public DateTime answered { get; set; }
+        public int userid { get; set; }
+        public string answer { get; set; }
     }
 }
