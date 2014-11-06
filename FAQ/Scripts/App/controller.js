@@ -8,12 +8,13 @@ App.controller("controller", function ($scope, $http) {
     $scope.questions = [];
     $scope.question = [];
     $scope.category = [];
+    var rowhack;
+
     function getAllCategories() {
         $http.get(categoryUrl).
         success(function (allCategories) {
-            $scope.showLoading = false; 
-
-            $scope.rowhack = [];
+            $scope.showLoading = false,
+            $scope.rowhack = []
             while (allCategories.length) {
                 $scope.rowhack.push(allCategories.splice(0, 2))
             }
@@ -22,6 +23,8 @@ App.controller("controller", function ($scope, $http) {
             console.log(status + data);
         });
     };
+    getAllCategories();
+
 
     function getQuestionsByCategory(id){
         $http.get(questionByCatUrl + id).
@@ -40,10 +43,14 @@ App.controller("controller", function ($scope, $http) {
     
     
     $scope.showNewQuestionForm = function () {
-        $scope.question = "";
-        $scope.email = "";
+        console.log($scope.categories);
+        console.log($scope.rowhack);
+        getAllCategories();
+        $scope.formQuestion = "";
+        $scope.formEmail = "";
         $scope.newquestionform.$setPristine();
         hideAll();
+       
         $scope.showForm = true;
 
     };
@@ -67,10 +74,18 @@ App.controller("controller", function ($scope, $http) {
             });
     };
     $scope.showFAQFunction = function () {
-
         hideAll();
         $scope.showLoading = true;
-        getAllCategories();
+
+        $http.get(categoryUrl).
+            success(function (allCategories) {
+                $scope.showLoading = false,
+                $scope.categories = allCategories
+            }).
+            error(function (data, status) {
+                console.log(status + data);
+            });
+
 
         $scope.showFAQ = true;
 
@@ -103,7 +118,8 @@ App.controller("controller", function ($scope, $http) {
         $scope.showFAQ = false;
         $scope.showLoading = false;
         $scope.showQuestion = false;
-        $scope.showCategory = false; 
+        $scope.showCategory = false;
+        $scope.showAdmin = false; 
     }
 
     function getQuestion(id) {
@@ -118,6 +134,16 @@ App.controller("controller", function ($scope, $http) {
             });
     };
 
+    function getUnAnsweredQuestions() {
+        $http.get(questionUrl, true)
+            .success(function (data) {
+                $scope.showLoading = false;
+                $scope.questions = data
+            })
+            .error(function (data, status) {
+                console.log(status + data)
+            });
+    };
 
 
     $scope.showCategoryFunction = function (id) {
@@ -142,4 +168,10 @@ App.controller("controller", function ($scope, $http) {
         $scope.status.isOpen[question.id] = true;
         $scope.showCategory = true;
     };
+    $scope.showAdminFunction = function () {
+        hideAll();
+        $scope.showLoading = true;
+        getUnAnsweredQuestions();
+        $showAdmin = true;
+    }
 });

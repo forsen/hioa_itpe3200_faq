@@ -37,6 +37,7 @@ namespace FAQ.Models
         [Key]
         public int Id { get; set; }
         public String Name { get; set; }
+        public String Glyph { get; set; }
         public virtual List<Questions> Questions { get; set; }
     }
 

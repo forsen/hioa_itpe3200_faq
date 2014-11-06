@@ -44,6 +44,40 @@ namespace FAQ
             return allQuestions; 
         }
 
+        public List<Question> getAllUnanswered(int? category)
+        {
+            List<Question> allQuestions;
+            if (category == null)
+            {
+                allQuestions = db.Questions.Where(c => c.Answer == null).Select(p => new Question()
+                {
+                    id = p.Id,
+                    answer = p.Answer,
+                    asked = p.Asked,
+                    categoryid = p.CategoryId,
+                    categoryname = p.Category.Name,
+                    email = p.Email,
+                    question = p.Question,
+                    upvotes = p.UpVotes
+                }).ToList();
+
+                return allQuestions;
+            }
+
+            allQuestions = db.Questions.Where(q => q.CategoryId == category && q.Answer == null).Select(p => new Question()
+            {
+                id = p.Id,
+                answer = p.Answer,
+                asked = p.Asked,
+                categoryid = p.CategoryId,
+                categoryname = p.Category.Name,
+                email = p.Email,
+                question = p.Question,
+                upvotes = p.UpVotes
+            }).ToList();
+
+            return allQuestions;
+        }
         public Question getQuestion(int id)
         {
             Questions que = db.Questions.Include("Category").FirstOrDefault(q => q.Id == id);
@@ -92,10 +126,7 @@ namespace FAQ
             updatedQuestion.Email = inQuestion.email;
             updatedQuestion.Question = inQuestion.question;
             updatedQuestion.UpVotes = inQuestion.upvotes;
-            
-
-            
-            
+             
             try
             {
                 db.SaveChanges();

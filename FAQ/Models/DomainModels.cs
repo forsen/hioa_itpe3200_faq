@@ -27,6 +27,7 @@ namespace FAQ.Models
     {
         public int id { get; set; }
         public string name { get; set; }
+        public string glyph { get; set; }
         public List<Question> questions { get; set; }
     }
 

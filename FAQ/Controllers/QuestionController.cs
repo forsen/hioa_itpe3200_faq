@@ -17,9 +17,13 @@ namespace FAQ.Controllers
 
 
         // GET api/Question
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get([FromBody] bool unanswered)
         {
-            List<Question> allQuestions = db.getAllQuestions(null);
+            List<Question> allQuestions;
+            if(unanswered)
+                allQuestions = db.getAllUnanswered(null);
+            else
+                allQuestions = db.getAllQuestions(null);
 
             var Json = new JavaScriptSerializer();
             string JsonString = Json.Serialize(allQuestions);

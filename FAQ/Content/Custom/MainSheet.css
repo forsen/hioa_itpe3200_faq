@@ -103,7 +103,7 @@ box-shadow:         0px 3px 10px 0px rgba(50, 50, 50, 0.75);
 -moz-box-shadow:    0px 3px 10px 0px rgba(50, 50, 50, 0.75);
 box-shadow:         0px 3px 10px 0px rgba(50, 50, 50, 0.75);
 }
-
+/*
 .panel-default
 {
  background:#fff;
@@ -112,7 +112,7 @@ box-shadow:         0px 3px 10px 0px rgba(50, 50, 50, 0.75);
 -moz-box-shadow:    0px 1px 2px 0px rgba(50, 50, 50, 0.24);
  box-shadow:         0px 1px 2px 0px rgba(50, 50, 50, 0.24);
 }
-
+    */
 .userpanel
 {
     background: #f9f9f9;
@@ -207,7 +207,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ead5b2', end
 
     color: #555555;
 }
-
+/*
 .my-modal-notloggedin .panel
 {
     margin-top: 0px;
@@ -225,10 +225,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ead5b2', end
     -moz-box-shadow:    0px 3px 10px 0px rgba(50, 50, 50, 0.50);
      box-shadow:         0px 3px 10px 0px rgba(50, 50, 50, 0.50);
 }
-
+*/
 hr
 {
     margin-top:0px;
     margin-bottom:10px;
 }
 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

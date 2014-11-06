@@ -16,6 +16,7 @@ namespace FAQ
                 {
                     id = c.Id,
                     name = c.Name,
+                    glyph = c.Glyph,
                     questions = c.Questions.Where(p=>p.Answer != null).Select(s => new Question()
                     {
                         id = s.Id,
