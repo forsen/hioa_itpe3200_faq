@@ -45,26 +45,6 @@
     </div>
     <div class="container body-content">
         <div class="row">
-           <!--
-             <div class="col-md-2">
-                <div class="panel panel-default pull-left" style="position:absolute; margin-top:0px; background:#180d00; border:0">
-                    <div class="panel-body">
-                        <div class="pull-left">
-                            <div id="menu_container">
-                                <div id="sidemenu">
-                                    <h4>Kategorier</h4>
-
-                                    <div class="item" ng-repeat="category in categories">
-                                        <a class="sub" ng-click="showCategory(category.id)">{{category.name}}</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-               -->
             <div class="col-md-12">
                 <div class="jumbotron">
                     <div ng-show="showForm">
@@ -133,6 +113,14 @@
 
 
                         </accordion>
+                    </div>
+                    <div ng-show="showAdmin">
+                        <div class="panel pane-default">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-click="answerQuestion(question.id)" ng-repeat="question in questions">{{question.question}}</li>
+                                <li class="list-group-item" ng-show="!questions.length">Ingen ubesvarte spørsmål</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="row"></div>
 

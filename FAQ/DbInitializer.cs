@@ -7,7 +7,7 @@ using System.Web;
 
 namespace FAQ
 {
-    public class DbInitializer : DropCreateDatabaseAlways<DatabaseContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<DatabaseContext>
     {
         protected override void Seed(DatabaseContext context)
         {
@@ -25,14 +25,14 @@ namespace FAQ
 
             var questions = new List<Questions>
             {
-                new Questions {Question="Hvor lang tid tar det før varene blir levert?",Asked=DateTime.Now, CategoryId=2,Email="erik@forsen.no"},
-                new Questions {Question="Hva skjer om jeg ikke er hjemme når bestillingen kommer?", Asked=DateTime.Now, CategoryId=2,Email="lisa@forsen.no"},
-                new Questions {Question="Kan jeg betale med BitCoins?", Asked=DateTime.Now, CategoryId=1,Email="tull@ball.no"},
-                new Questions {Question="Er det mulig å betale med forskuddsfaktura?", Asked=DateTime.Now, CategoryId=1, Email="ball@tull.no"},
-                new Questions {Question="Hva er aldersgrensen for å handle hos Snublevann.no?", Asked=DateTime.Now,CategoryId=3,Email="per@hansen.no"},
-                new Questions {Question="Er det lovlig å selge alkohol på nett?", Asked=DateTime.Now, CategoryId=3, Email="tull@ball.no"},
-                new Questions {Question="Jeg finner ikke vare X i nettbutikken, er det mulig å bestille opp?",Asked=DateTime.Now, CategoryId=4,Email="lyst@på.mere.no"},
-                new Questions {Question="Jeg er rå på programmering, ansetter dere nye utviklere?",Asked=DateTime.Now, CategoryId=5,Email="ing@cognito.no"}
+                new Questions {Question="Hvor lang tid tar det før varene blir levert?",Asked=DateTime.Now, CategoryId=2,Email="erik@forsen.no",UpVotes=4},
+                new Questions {Question="Hva skjer om jeg ikke er hjemme når bestillingen kommer?", Asked=DateTime.Now, CategoryId=2,Email="lisa@forsen.no",UpVotes=9},
+                new Questions {Question="Kan jeg betale med BitCoins?", Asked=DateTime.Now, CategoryId=1,Email="tull@ball.no",UpVotes=5},
+                new Questions {Question="Er det mulig å betale med forskuddsfaktura?", Asked=DateTime.Now, CategoryId=1, Email="ball@tull.no",UpVotes=3},
+                new Questions {Question="Hva er aldersgrensen for å handle hos Snublevann.no?", Asked=DateTime.Now,CategoryId=3,Email="per@hansen.no",UpVotes=8},
+                new Questions {Question="Er det lovlig å selge alkohol på nett?", Asked=DateTime.Now, CategoryId=3, Email="tull@ball.no",UpVotes=9},
+                new Questions {Question="Jeg finner ikke vare X i nettbutikken, er det mulig å bestille opp?",Asked=DateTime.Now, CategoryId=4,Email="lyst@på.mere.no",UpVotes=2},
+                new Questions {Question="Jeg er rå på programmering, ansetter dere nye utviklere?",Asked=DateTime.Now, CategoryId=5,Email="ing@cognito.no",UpVotes=1}
             };
             //questions.ForEach(c => context.Questions.Add(c));
             //context.SaveChanges();

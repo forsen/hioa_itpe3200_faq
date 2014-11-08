@@ -17,10 +17,10 @@ namespace FAQ.Controllers
 
 
         // GET api/Question
-        public HttpResponseMessage Get([FromBody] bool unanswered)
+        public HttpResponseMessage Get([FromUri] string unanswered)
         {
             List<Question> allQuestions;
-            if(unanswered)
+            if(unanswered.Equals("true"))
                 allQuestions = db.getAllUnanswered(null);
             else
                 allQuestions = db.getAllQuestions(null);
