@@ -78,7 +78,7 @@ namespace FAQ
             allQuestions = db.Questions.Where(q => q.CategoryId == category && q.Answer == null).Select(p => new Question()
             {
                 id = p.Id,
-                answer = null,
+                answer = new Answer(),
                 asked = p.Asked.ToString(),
                 categoryid = p.CategoryId,
                 categoryname = p.Category.Name,

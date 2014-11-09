@@ -62,7 +62,7 @@
                             </div>
                             <div class="form-group">
                                 <label>E-post</label>
-                                <input class="form-control" name="formEmail" ng-model="formEmail" ng-required="true" ng-pattern="/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/" />
+                                <input class="form-control" name="formEmail" ng-model="formEmail" ng-required="true" ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" />
                                 <p class="label label-info" ng-show="newquestionform.formEmail.$invalid && newquestionform.formEmail.$dirty">Feil i epost</p>
                             </div>
                             <div class="form-group">
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="panel-default panel col-md-12" ng-show="showLoading">
-                        <p>Laster inn data...</p>
+                        <center><p>Laster inn data...</p></center>
                     </div>
                     <div class="panel-default panel col-md-12" ng-show="showCategory">
                         <center><h3>{{category.name}}</h3></center>
@@ -117,8 +117,12 @@
                     <div ng-show="showAdmin">
                         <div class="panel pane-default">
                             <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="question in questions" ng-click="answerQuestion(question)">{{question.question}}</li>
-                                <li class="list-group-item" ng-show="!questions.length">Ingen ubesvarte spørsmål</li>
+                                <li class="list-group-item" ng-repeat="category in categories">{{category.name}}
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="question in category.questions" ng-click="answerQuestion(question)">{{question.question}}</li>
+                                        <li class="list-group-item" ng-show="!category.questions.length">Ingen ubesvarte spørsmål</li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>

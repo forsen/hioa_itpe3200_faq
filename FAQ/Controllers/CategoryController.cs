@@ -16,9 +16,10 @@ namespace FAQ.Controllers
         DBCategory db = new DBCategory(); 
 
         // GET api/Category
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get([FromUri] string unanswered)
         {
-            List<Category> allCategories = db.getAllCategories();
+
+            List<Category> allCategories = db.getAllCategories(unanswered.Equals("true")); 
             if (allCategories == null)
                 return new HttpResponseMessage()
                 {

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace FAQ
 {
-    public class DbInitializer : DropCreateDatabaseIfModelChanges<DatabaseContext>
+    public class DbInitializer : DropCreateDatabaseAlways<DatabaseContext>
     {
         protected override void Seed(DatabaseContext context)
         {

@@ -33,7 +33,7 @@ App.controller("controller", function ($scope, $http) {
         $scope.formQuestion = "";
         $scope.formEmail = "";
         $scope.newquestionform.$setPristine();
-        $http.get(categoryUrl).
+        $http.get(categoryUrl, { params: { unanswered: false } }).
         success(function (allCategories) {
             $scope.showLoading = false,
             $scope.categories = allCategories,
@@ -68,7 +68,7 @@ App.controller("controller", function ($scope, $http) {
     $scope.showFAQFunction = function () {
         hideAll();
         $scope.showLoading = true;
-        $http.get(categoryUrl).
+        $http.get(categoryUrl, { params: { unanswered: false } }).
         success(function (allCategories) {
             $scope.showLoading = false,
             $scope.rowhack = []
@@ -128,23 +128,6 @@ App.controller("controller", function ($scope, $http) {
             });
     };
 
-    function getUnAnsweredQuestions() {
-        
-        $http({
-            url: questionUrl,
-            method: 'GET',
-            params: {unanswered : true}
-        })
-            .success(function (data) {
-                $scope.showLoading = false;
-                $scope.questions = data
-            })
-            .error(function (data, status) {
-                console.log(status + data)
-            });
-    };
-
-
     $scope.showCategoryFunction = function (id) {
         $scope.oneAtATime = false;
         hideAll();
@@ -170,7 +153,18 @@ App.controller("controller", function ($scope, $http) {
     $scope.showAdminFunction = function () {
         hideAll();
         $scope.showLoading = true;
-        getUnAnsweredQuestions();
+        $http({
+            url: categoryUrl,
+            method: 'GET',
+            params: { unanswered: true }
+        })
+            .success(function (data) {
+                $scope.showLoading = false;
+                $scope.categories = data
+            })
+            .error(function (data, status) {
+                console.log(status + data)
+            });
         $scope.showAdmin = true;
     };
 
