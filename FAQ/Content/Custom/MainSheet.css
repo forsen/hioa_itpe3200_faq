@@ -232,4 +232,4 @@ hr
     margin-bottom:10px;
 }
 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+[ng-click], .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

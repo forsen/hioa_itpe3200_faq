@@ -11,22 +11,6 @@ App.controller("controller", function ($scope, $http) {
     $scope.category = [];
     var rowhack;
 
-    function getAllCategories() {
-        $http.get(categoryUrl).
-        success(function (allCategories) {
-            $scope.showLoading = false,
-            $scope.rowhack = []
-            while (allCategories.length) {
-                $scope.rowhack.push(allCategories.splice(0, 2))
-            }
-        }).
-        error(function (data, status) {
-            console.log(status + data);
-        });
-    };
-    getAllCategories();
-
-
     function getQuestionsByCategory(id){
         $http.get(questionByCatUrl + id).
         success(function (questionsByCat){
@@ -84,16 +68,17 @@ App.controller("controller", function ($scope, $http) {
     $scope.showFAQFunction = function () {
         hideAll();
         $scope.showLoading = true;
-
         $http.get(categoryUrl).
-            success(function (allCategories) {
-                $scope.showLoading = false,
-                $scope.categories = allCategories
-            }).
-            error(function (data, status) {
-                console.log(status + data);
-            });
-
+        success(function (allCategories) {
+            $scope.showLoading = false,
+            $scope.rowhack = []
+            while (allCategories.length) {
+                $scope.rowhack.push(allCategories.splice(0, 2))
+            }
+        }).
+        error(function (data, status) {
+            console.log(status + data);
+        });
 
         $scope.showFAQ = true;
 
@@ -127,7 +112,8 @@ App.controller("controller", function ($scope, $http) {
         $scope.showLoading = false;
         $scope.showQuestion = false;
         $scope.showCategory = false;
-        $scope.showAdmin = false; 
+        $scope.showAdmin = false;
+        $scope.showAnswerForm = false; 
     }
 
     function getQuestion(id) {
@@ -186,5 +172,63 @@ App.controller("controller", function ($scope, $http) {
         $scope.showLoading = true;
         getUnAnsweredQuestions();
         $scope.showAdmin = true;
-    }
+    };
+
+    $scope.answerQuestion = function (question) {
+        hideAll();
+        $scope.question = question; 
+        $scope.answerFormQuestion = question.question;
+        $scope.answerFormEmail = question.email;
+        $scope.answerFormDate = question.asked;
+        $http.get(categoryUrl).
+        success(function (allCategories) {
+            $scope.showLoading = false,
+            $scope.categories = allCategories,
+            $scope.showAnswerForm = true,
+            $scope.category = $scope.categories[question.categoryid-1]
+        }).
+        error(function (data, status) {
+            console.log(status + data);
+        });
+    };
+    function putAnswer(answer) {
+        $http.put(questionUrl + "ans/" + $scope.question.id, answer).
+            success(function (data) {
+                $scope.showLoading = false,
+                $scope.showAdmin = true
+            }).
+            error(function (data, status) {
+                console.log(status + data)
+            });
+    };
+    $scope.saveAnswer = function () {
+        hideAll();
+        $scope.showLoading = true; 
+        var updatedQuestion = {
+            question: $scope.answerFormQuestion,
+            categoryid: $scope.categoryid,
+        };
+        var answer = {
+            answer: $scope.answerFormAnswer,
+            userid: 5
+        };
+        console.log($scope.answerform.answerFormQuestion.$pristine);
+        console.log($scope.answerform.answerFormCategory.$pristine);
+        if (!$scope.answerform.answerFormQuestion.$pristine || !$scope.answerform.answerFormCategory.$pristine) {
+            $scope.question.question = $scope.answerFormQuestion;
+            $scope.question.categoryid = $scope.category.id;
+            $http.put(questionUrl + $scope.question.id, $scope.question).
+                success(function (data) {
+                    console.log("burde oppdatere"),
+                    putAnswer(answer); 
+                }).
+                error(function (data, status) {
+                    console.log(status + data);
+                });
+        }
+        else
+            putAnswer(answer);
+
+    };
+
 });

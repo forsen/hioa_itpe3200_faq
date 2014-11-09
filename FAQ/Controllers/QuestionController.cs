@@ -65,7 +65,6 @@ namespace FAQ.Controllers
         {
             if(ModelState.IsValid)
             {
-                inQuestion.asked = DateTime.Now;
                 if(db.saveNewQuestion(inQuestion)){
                     return new HttpResponseMessage()
                     {
@@ -95,6 +94,28 @@ namespace FAQ.Controllers
                     {
                         StatusCode = HttpStatusCode.OK
                     };
+            }
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound
+            };
+        }
+
+        [Route("ans/{id}")]
+        public HttpResponseMessage Put(int id, Answer inAnswer)
+        {
+            if(ModelState.IsValid)
+            {
+                Question question = db.getQuestion(id);
+                question.answer = inAnswer;
+                 
+                if(db.updateQuestion(id, question))
+                    if(db.addAnswer(id,inAnswer))
+                        return new HttpResponseMessage()
+                        {
+                            StatusCode = HttpStatusCode.OK
+                        };
             }
 
             return new HttpResponseMessage()

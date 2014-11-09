@@ -21,8 +21,13 @@ namespace FAQ
                     {
                         id = s.Id,
                         question = s.Question,
-                        answer = s.Answer,
-                        asked = s.Asked,
+                        answer = new Answer(){
+                            answer = s.Answer.Answer,
+                            id = s.Id,
+                            answered = s.Answer.Answered.ToString(),
+                            userid = s.Answer.UserId
+                        },
+                        asked = s.Asked.ToString(),
                         categoryid = c.Id,
                         categoryname = c.Name,
                         email = s.Email,

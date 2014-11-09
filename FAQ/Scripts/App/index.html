@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label>Spørsmål</label>
                                 <input class="form-control" name="formQuestion" ng-model="formQuestion" ng-required="true" />
-                                <p class="label label-info" ng-show="newquestionform.question.$invalid && newquestionform.question.$dirty">Spørsmålet inneholder ulovlige tegn</p>
+                                <p class="label label-info" ng-show="newquestionform.formQuestion.$invalid && newquestionform.formQuestion.$dirty">Spørsmålet inneholder ulovlige tegn</p>
                             </div>
                             <div class="form-group">
                                 <label>Kategori</label>
@@ -63,7 +63,7 @@
                             <div class="form-group">
                                 <label>E-post</label>
                                 <input class="form-control" name="formEmail" ng-model="formEmail" ng-required="true" ng-pattern="/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/" />
-                                <p class="label label-info" ng-show="newquestionform.email.$invalid && newquestionform.email.$dirty">Feil i epost</p>
+                                <p class="label label-info" ng-show="newquestionform.formEmail.$invalid && newquestionform.formEmail.$dirty">Feil i epost</p>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary" ng-click="saveNewQuestion()" ng-disabled="newquestionform.$invalid">Send spørsmål</button>
@@ -107,7 +107,7 @@
                     <div ng-show="showCategory">
                         <accordion close-others="false">
                             <accordion-group heading="{{question.question}}" ng-repeat="question in questions" is-open="status.isOpen[question.id]">
-                                <p class="lead">{{question.answer.Answer}}</p>
+                                <p class="lead">{{question.answer.answer}}</p>
                                 <p><small>{{question.upvotes}} personer har funnet dette spørsmålet nyttig. Fikk du svar på det du lurte på? <button class="btn btn-success" ng-click="upVote(question)"><span class="glyphicon glyphicon-thumbs-up"></span>Ja!</button> <button class="btn btn-danger" ng-click="showNewQuestionForm()"><span class="glyphicon glyphicon-thumbs-down"> Nei!</span></button></small></p>
                             </accordion-group>
 
@@ -117,10 +117,39 @@
                     <div ng-show="showAdmin">
                         <div class="panel pane-default">
                             <ul class="list-group">
-                                <li class="list-group-item" ng-click="answerQuestion(question.id)" ng-repeat="question in questions">{{question.question}}</li>
+                                <li class="list-group-item" ng-repeat="question in questions" ng-click="answerQuestion(question)">{{question.question}}</li>
                                 <li class="list-group-item" ng-show="!questions.length">Ingen ubesvarte spørsmål</li>
                             </ul>
                         </div>
+                    </div>
+                    <div class="panel-default panel col-md-12" ng-show="showAnswerForm">
+                        <form name="answerform">
+                            <div class="form-group">
+                                <label>Spørsmål</label>
+                                <input class="form-control" name="answerFormQuestion" ng-model="answerFormQuestion" ng-required="true"/>
+                                <p class="label label-info" ng-show="answerform.answerFormQuestion.$invalid && answerform.answerFormQuestion.$dirty">Spårsmålet inneholder ulovlige tegn</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select class="form-control input-lg" name="answerFormCategory" ng-model="category" ng-options="category as category.name for category in categories" ng-required="true">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>E-post</label>
+                                <input class="form-control disabled" name="answerFormEmail" ng-model="answerFormEmail" ng-readonly="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Dato</label>
+                                <input class="form-control disabled" name="answerFormDate" ng-model="answerFormDate" ng-readonly="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Svar</label>
+                                <input class="form-control" name="answerFormAnswer" ng-model="answerFormAnswer" ng-required="true"/>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" ng-click="saveAnswer()" ng-disabled="answerform.$invalid">Registrer svar</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="row"></div>
 

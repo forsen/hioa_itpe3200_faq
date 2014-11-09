@@ -9,10 +9,10 @@ namespace FAQ.Models
     public class Question
     {
         public int id { get; set; }
-        public DateTime asked { get; set; }
+        public String asked { get; set; }
         [Required]
         public String question { get; set; }
-        public Answers answer { get; set; }
+        public Answer answer { get; set; }
         [Required]
         [RegularExpression("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")]
         public String email { get; set; }
@@ -34,7 +34,7 @@ namespace FAQ.Models
     public class Answer
     {
         public int id { get; set; }
-        public DateTime answered { get; set; }
+        public String answered { get; set; }
         public int userid { get; set; }
         public string answer { get; set; }
     }
