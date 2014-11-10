@@ -75,12 +75,13 @@ App.controller("controller", function ($scope, $http) {
             while (allCategories.length) {
                 $scope.rowhack.push(allCategories.splice(0, 2))
             }
+            $scope.showFAQ = true
         }).
         error(function (data, status) {
             console.log(status + data);
         });
 
-        $scope.showFAQ = true;
+        
 
 
     }
@@ -105,16 +106,7 @@ App.controller("controller", function ($scope, $http) {
                 console.log(status + data);
             });
     };
-    function hideAll() {
-        $scope.showForm = false;
-        $scope.showThanks = false;
-        $scope.showFAQ = false;
-        $scope.showLoading = false;
-        $scope.showQuestion = false;
-        $scope.showCategory = false;
-        $scope.showAdmin = false;
-        $scope.showAnswerForm = false; 
-    }
+
 
     function getQuestion(id) {
         $http.get(questionUrl + id)
@@ -159,13 +151,14 @@ App.controller("controller", function ($scope, $http) {
             params: { unanswered: true }
         })
             .success(function (data) {
-                $scope.showLoading = false;
-                $scope.categories = data
+                $scope.showLoading = false,
+                $scope.categories = data,
+                $scope.showAdmin = true
             })
             .error(function (data, status) {
                 console.log(status + data)
             });
-        $scope.showAdmin = true;
+        
     };
 
     $scope.answerQuestion = function (question) {
@@ -222,5 +215,14 @@ App.controller("controller", function ($scope, $http) {
             putAnswer(answer);
 
     };
-
+    function hideAll() {
+        $scope.showForm = false;
+        $scope.showThanks = false;
+        $scope.showFAQ = false;
+        $scope.showLoading = false;
+        $scope.showQuestion = false;
+        $scope.showCategory = false;
+        $scope.showAdmin = false;
+        $scope.showAnswerForm = false;
+    };
 });
