@@ -67,26 +67,27 @@
                         <form name="newquestionform">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Spørsmål</label>
-                                        <textarea rows="5" class="form-control" name="formQuestion" ng-model="formQuestion" ng-required="true" ></textarea>
-                                        <p class="label label-info" ng-show="newquestionform.formQuestion.$invalid && newquestionform.formQuestion.$dirty">Spørsmålet inneholder ulovlige tegn</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
      
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{'has-error':newquestionform.formCategory.$invalid && newquestionform.formCategory.$dirty, 'has-success':!newquestionform.formCategory.$invalid && newquestionform.formCategory.$dirty}">
                                         <label>Kategori</label>
-                                        <select class="form-control input-lg" ng-model="category" ng-options="category as category.name for category in categories" ng-required="true">
+                                        <select class="form-control" ng-model="category" ng-options="category as category.name for category in categories" ng-required="true" name="formCategory">
                                             <option value="">---velg en kategori---</option>
                                         </select>
+                                        <p class="help-block" ng-show="newquestionform.formCategory.$invalid && newquestionform.formCategory.$dirty">Du må velge en kategori fra listen</p>
                                     </div>
                                 
                              
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{'has-error':newquestionform.formEmail.$invalid && newquestionform.formEmail.$dirty, 'has-success':!newquestionform.formEmail.$invalid && newquestionform.formEmail.$dirty}">
                                         <label>E-post</label>
                                         <input class="form-control" name="formEmail" ng-model="formEmail" ng-required="true" ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" />
-                                        <p class="label label-info" ng-show="newquestionform.formEmail.$invalid && newquestionform.formEmail.$dirty">Feil i epost</p>
+                                        <p class="help-block" ng-show="newquestionform.formEmail.$invalid && newquestionform.formEmail.$dirty">ikke gyldig epostadresse</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" ng-class="{'has-error':newquestionform.formQuestion.$invalid && newquestionform.formQuestion.$dirty,'has-success':!newquestionform.formQuestion.$invalid && newquestionform.formQuestion.$dirty}">
+                                        <label>Spørsmål</label>
+                                        <textarea rows="5" class="form-control" name="formQuestion" ng-model="formQuestion" ng-required="true"></textarea>
+                                        <p class="help-block" ng-show="newquestionform.formQuestion.$invalid && newquestionform.formQuestion.$dirty">Feltet kan ikke være tomt!</p>
                                     </div>
                                 </div>
                             </div>
@@ -154,28 +155,33 @@
                     </div>
       
                     <div class="panel-default panel col-md-12" ng-show="showAnswerForm">
+                        <div class="page-header">
+                            <h2>Svar på spørsmålet! <small>Spørsmål og kategori kan endres til mer passende verdier om nødvendig</small></h2>
+                        </div>
                         <form name="answerform">
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error':answerform.answerFormQuestion.$invalid,'has-success':answerform.answerFormQuestion.$valid}">
                                 <label>Spørsmål</label>
                                 <input class="form-control" name="answerFormQuestion" ng-model="answerFormQuestion" ng-required="true"/>
-                                <p class="label label-info" ng-show="answerform.answerFormQuestion.$invalid && answerform.answerFormQuestion.$dirty">Spårsmålet inneholder ulovlige tegn</p>
+                                <p class="help-block" ng-show="answerform.answerFormQuestion.$invalid">Spårsmålet kan ikke være tomt!</p>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error':answerform.answerFormCategory.$invalid,'has-success':answerform.answerFormCategory.$valid}">
                                 <label>Kategori</label>
                                 <select class="form-control input-lg" name="answerFormCategory" ng-model="category" ng-options="category as category.name for category in categories" ng-required="true">
                                 </select>
+                                <p class="help-block" ng-show="answerform.answerFormQuestion.$invalid">Du må velge en kategori fra listen</p>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-success">
                                 <label>E-post</label>
                                 <input class="form-control disabled" name="answerFormEmail" ng-model="answerFormEmail" ng-readonly="true"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-success">
                                 <label>Dato</label>
                                 <input class="form-control disabled" name="answerFormDate" ng-model="answerFormDate" ng-readonly="true"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error':answerform.answerFormAnswer.$invalid && answerform.answerFormAnswer.$dirty, 'has-success':answerform.answerFormAnswer.$valid && answerform.answerFormAnswer.$dirty}">
                                 <label>Svar</label>
                                 <input class="form-control" name="answerFormAnswer" ng-model="answerFormAnswer" ng-required="true"/>
+                                <p class="help-block" ng-show="answerform.answerFormAnswer.$invalid && answerform.answerFormAnswer.$dirty">Svaret kan ikke være tomt!</p>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary" ng-click="saveAnswer(false)" ng-disabled="answerform.$invalid">Svar på epost + FAQ</button>
