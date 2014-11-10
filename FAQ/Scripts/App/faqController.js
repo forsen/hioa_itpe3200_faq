@@ -174,7 +174,9 @@ App.controller("controller", function ($scope, $http) {
         $scope.answerFormQuestion = question.question;
         $scope.answerFormEmail = question.email;
         $scope.answerFormDate = question.asked;
-        $http.get(categoryUrl).
+        $scope.answerFormAnswer = ""; 
+        $scope.answerform.$setPristine();
+        $http.get(categoryUrl, {params: {unanswered : true}}).
         success(function (allCategories) {
             $scope.showLoading = false,
             $scope.categories = allCategories,
@@ -189,31 +191,27 @@ App.controller("controller", function ($scope, $http) {
         $http.put(questionUrl + "ans/" + $scope.question.id, answer).
             success(function (data) {
                 $scope.showLoading = false,
-                $scope.showAdmin = true
+                $scope.showAdminFunction()
             }).
             error(function (data, status) {
                 console.log(status + data)
             });
     };
-    $scope.saveAnswer = function () {
+    $scope.saveAnswer = function (dontshowinfaq) {
         hideAll();
-        $scope.showLoading = true; 
-        var updatedQuestion = {
-            question: $scope.answerFormQuestion,
-            categoryid: $scope.categoryid,
-        };
+        $scope.showLoading = true;
+        console.log("dontshowinfaq: " + dontshowinfaq);
         var answer = {
             answer: $scope.answerFormAnswer,
             userid: 5
         };
-        console.log($scope.answerform.answerFormQuestion.$pristine);
-        console.log($scope.answerform.answerFormCategory.$pristine);
-        if (!$scope.answerform.answerFormQuestion.$pristine || !$scope.answerform.answerFormCategory.$pristine) {
+        if (!$scope.answerform.answerFormQuestion.$pristine || !$scope.answerform.answerFormCategory.$pristine || dontshowinfaq == true) {
             $scope.question.question = $scope.answerFormQuestion;
             $scope.question.categoryid = $scope.category.id;
+            $scope.question.dontshowinfaq = 1;
+            console.log("huoaesnt");
             $http.put(questionUrl + $scope.question.id, $scope.question).
                 success(function (data) {
-                    console.log("burde oppdatere"),
                     putAnswer(answer); 
                 }).
                 error(function (data, status) {

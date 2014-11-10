@@ -21,7 +21,6 @@ namespace FAQ
             {
                 {
                     db.Database.Initialize(true);
-                    Debug.WriteLine("blah");
                 }
             }
         }

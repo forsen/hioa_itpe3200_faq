@@ -19,6 +19,7 @@ namespace FAQ.Models
         [Required]
         [RegularExpression("^[1-9]+[0-9]*")]
         public int categoryid { get; set; }
+        public bool dontshowinfaq { get; set; }
         public String categoryname { get; set; }
         public int upvotes { get; set; }
     }

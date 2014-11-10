@@ -47,6 +47,7 @@ namespace FAQ.Models
         public int Id { get; set; }
         public DateTime Asked { get; set; }
         public String Question { get; set; }
+        public bool DontShowInFaq { get; set; }
         public Answers Answer { get; set; }
         public String Email { get; set; }
         public int CategoryId { get; set; }

@@ -14,7 +14,7 @@ namespace FAQ
             List<Question> allQuestions; 
             if(category == null)
             {
-                allQuestions = db.Questions.Where(c=>c.Answer != null).Select(p => new Question()
+                allQuestions = db.Questions.Where(c=>c.Answer != null && !c.DontShowInFaq).Select(p => new Question()
                 {
                     id = p.Id,
                     answer = new Answer()
@@ -35,7 +35,7 @@ namespace FAQ
                 return allQuestions; 
             }
 
-            allQuestions = db.Questions.Where(q => q.CategoryId == category && q.Answer != null).Select(p => new Question()
+            allQuestions = db.Questions.Where(q => q.CategoryId == category && q.Answer != null && !q.DontShowInFaq).Select(p => new Question()
             {
                 id = p.Id,
                 answer = new Answer(){
@@ -60,7 +60,7 @@ namespace FAQ
             List<Question> allQuestions;
             if (category == null)
             {
-                allQuestions = db.Questions.Where(c => c.Answer == null).Select(p => new Question()
+                allQuestions = db.Questions.Where(c => c.Answer == null && !c.DontShowInFaq).Select(p => new Question()
                 {
                     id = p.Id,
                     answer = new Answer(),
@@ -75,7 +75,7 @@ namespace FAQ
                 return allQuestions;
             }
 
-            allQuestions = db.Questions.Where(q => q.CategoryId == category && q.Answer == null).Select(p => new Question()
+            allQuestions = db.Questions.Where(q => q.CategoryId == category && q.Answer == null && !q.DontShowInFaq).Select(p => new Question()
             {
                 id = p.Id,
                 answer = new Answer(),
@@ -109,7 +109,8 @@ namespace FAQ
                 categoryid = que.CategoryId,
                 email = que.Email,
                 question = que.Question,
-                upvotes = que.UpVotes
+                upvotes = que.UpVotes,
+                dontshowinfaq = que.DontShowInFaq
             };
         }
 
@@ -167,6 +168,7 @@ namespace FAQ
             updatedQuestion.Email = inQuestion.email;
             updatedQuestion.Question = inQuestion.question;
             updatedQuestion.UpVotes = inQuestion.upvotes;
+            updatedQuestion.DontShowInFaq = inQuestion.dontshowinfaq;
              
             try
             {
