@@ -1,31 +1,26 @@
 ﻿var App = angular.module("faq", ['ui.bootstrap']);
 
+App.filter('object2array', function () {
+    return function(items, field) {
+        var filtered = [];
+        angular.forEach(items, function(item) {
+            filtered.push(item);
+        });
+        filtered.sort(function (a, b) {
+            return (a[field] < b[field] ? 1 : -1);
+        });
+        return filtered;
+    };
+});
 App.controller("controller", function ($scope, $http) {
     var categoryUrl = '/api/Category/';
     var questionUrl = '/api/Question/';
-    var questionByCatUrl = '/api/Question/cat/';
 
     hideAll();
     $scope.questions = [];
     $scope.question = [];
     $scope.category = [];
     var rowhack;
-
-    function getQuestionsByCategory(id){
-        $http.get(questionByCatUrl + id).
-        success(function (questionsByCat){
-            $scope.showLoading=false,
-            $scope.questions = questionsByCat,
-            $scope.category.name = questionsByCat[0].categoryname,
-            $scope.category.id = questionByCatUrl[0].categoryid
-        }).
-        error(function(data,status){
-            console.log(status + data)
-        });
-    };
-    
-
-    
     
     $scope.showNewQuestionForm = function () {
         hideAll();
@@ -42,9 +37,6 @@ App.controller("controller", function ($scope, $http) {
         error(function (data, status) {
             console.log(status + data);
         });
-       
-        
-
     };
 
     $scope.saveNewQuestion = function () {
@@ -80,22 +72,16 @@ App.controller("controller", function ($scope, $http) {
         error(function (data, status) {
             console.log(status + data);
         });
-
-        
-
-
-    }
-
-
+    };
 
     $scope.upVote = function (question) {
-        if (sessionStorage.getItem(question.id) == "true")
-            return; 
+        //if (sessionStorage.getItem(question.id) == "true")
+          //  return;
         sessionStorage.setItem(question.id, "true");
         $scope.question = question;
         $scope.question.upvotes = $scope.question.upvotes + 1;
         updateQuestion(question.id, question);
-    }
+    };
 
     function updateQuestion(id, question) {
         $http.put(questionUrl + id, question).
@@ -119,28 +105,40 @@ App.controller("controller", function ($scope, $http) {
                 console.log(status + data)
             });
     };
-
+    function getCategory(id) {
+        $http.get(categoryUrl + id, { params: { unanswered: false } }).
+            success(function (category) {
+                $scope.showLoading = false,
+                $scope.category = category,
+                console.log($scope.category.questions);
+                $scope.showCategory = true;
+            }).
+            error(function (data, status) {
+                console.log(status + data)
+            });
+    };
     $scope.showCategoryFunction = function (id) {
         $scope.oneAtATime = false;
         hideAll();
         $scope.showLoading = true;
-        getQuestionsByCategory(id);
+        getCategory(id); 
         $scope.status = {
             isFirstOpen: true,
             isFirstDisabled: false,
             isOpen: false
         };
-        $scope.showCategory = true;
+        
     };
 
     $scope.showQuestionFunction = function (question) {
         hideAll();
         $scope.showLoading = true;
-        getQuestionsByCategory(question.categoryid);
+        getCategory(question.categoryid);
+       
         $scope.status = [];
         $scope.status.isOpen = [];
         $scope.status.isOpen[question.id] = true;
-        $scope.showCategory = true;
+
     };
     $scope.showAdminFunction = function () {
         hideAll();

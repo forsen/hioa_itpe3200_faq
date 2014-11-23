@@ -8,7 +8,7 @@ using System.Web;
 namespace FAQ
 {
 
-    public class DbInitializer : DropCreateDatabaseAlways<DatabaseContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<DatabaseContext>
     {
         private Random prodGen = new Random();
         private Random prodDate = new Random();
@@ -42,7 +42,9 @@ namespace FAQ
                 new Questions {Question="Jeg er rå på programmering, ansetter dere nye utviklere?",Asked=RandomDay(start), CategoryId=5,Email="ing@cognito.no",UpVotes=1},
                 new Questions {Question="Hvilken plattform er nettbutikken utviklet på?", Asked=RandomDay(start), CategoryId=5, Email="epost@navn.no"},
                 new Questions {Question="Vinen jeg bestilte har korksmak, hvordan kan jeg få returnert / erstattet denne?",Asked=RandomDay(start),CategoryId=5,Email="vin@og.mat"},
-                new Questions {Question="Flasken var knust da de ble levert, hva nå?", Asked=RandomDay(start),CategoryId=2,Email="skuffet@kunde.no"}
+                new Questions {Question="Flasken var knust da de ble levert, hva nå?", Asked=RandomDay(start),CategoryId=2,Email="skuffet@kunde.no"},
+                new Questions {Question="Hvor mye koster det å få en bestilling tilsendt?",Asked=RandomDay(start),CategoryId=2,Email="per.hansen@gmail.com",UpVotes=8},
+                new Questions {Question="Har jeg angrerett etter å ha lagt inn bestilling?",Asked=RandomDay(start),CategoryId=4,Email="hansen.per@gmail.com",UpVotes=33}
             };
             //questions.ForEach(c => context.Questions.Add(c));
             //context.SaveChanges();
@@ -55,7 +57,9 @@ namespace FAQ
                 new Answers {Answer="Det er ingen aldersgrense for å handle hos oss, men leveringen kan kun mottas av personer over 18 år (20 år dersom leveransen inneholder varer med høyere enn 4,7% alkoholinnhold",Answered=RandomDay(questions[4].Asked),UserId=4,Question=questions[4]},
                 new Answers {Answer="Nei, det er det ikke.",Answered=RandomDay(questions[5].Asked),UserId=2,Question=questions[5]},
                 new Answers {Answer="What you see is what you get! Neida, vi er ikke tilhenger av WYSIWYG, så vi kan selvfølgelig bestille opp varer som ikke er i vårt sortiment.",Answered=RandomDay(questions[6].Asked),UserId=1,Question=questions[6]},
-                new Answers {Answer="Kom med minimum tre forslag til forbedringer av denne FAQ'en, så vil du bli vurdert på bakgrunn av det.",Answered=RandomDay(questions[7].Asked),UserId=3,Question=questions[7]}
+                new Answers {Answer="Kom med minimum tre forslag til forbedringer av denne FAQ'en, så vil du bli vurdert på bakgrunn av det.",Answered=RandomDay(questions[7].Asked),UserId=3,Question=questions[7]},
+                new Answers {Answer="Fraktprisen er avhengig av hvordan du ønsker å få tilsendt pakken og hvordan du vil betale. Vi tilbyr å betale med bankkort i nettbutikken, få faktura vedlagt pakken eller betale ved hjelp av oppkrav når du henter pakken. I tillegg tilbyr vi også delbetaling fra Klarna. Vi har avtale med Posten og Bring for sending av våre bestillinger.",Answered=RandomDay(questions[11].Asked),UserId=3,Question=questions[11]},
+                new Answers {Answer="Denne nettbutikken følger norsk lov (så langt det lar seg gjøre), så du har derfor 14 dagers angrerett. Benytt det medfølgende angrerettsskjemaet",Answered=RandomDay(questions[12].Asked),UserId=1,Question=questions[12]}
             };
 
             //answers.ForEach(a => context.Answers.Add(a));

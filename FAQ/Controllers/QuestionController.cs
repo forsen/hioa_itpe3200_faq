@@ -34,25 +34,13 @@ namespace FAQ.Controllers
             };
         }
 
+        // GET api/Question/#
         public HttpResponseMessage Get(int id)
         {
             Question question = db.getQuestion(id);
 
             var Json = new JavaScriptSerializer();
             string JsonString = Json.Serialize(question);
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(JsonString, Encoding.UTF8, "application/json"),
-                StatusCode = HttpStatusCode.OK
-            };
-        }
-        [Route("cat/{categoryid}")]
-        public HttpResponseMessage GetQuestionByCategory(int categoryid)
-        {
-            List<Question> allQuestions = db.getAllQuestions(categoryid);
-            allQuestions = allQuestions.OrderByDescending(c => c.upvotes).ToList();
-            var Json = new JavaScriptSerializer();
-            string JsonString = Json.Serialize(allQuestions);
             return new HttpResponseMessage()
             {
                 Content = new StringContent(JsonString, Encoding.UTF8, "application/json"),
@@ -84,6 +72,7 @@ namespace FAQ.Controllers
             };
         }
 
+        // PUT api/Question/#
         public HttpResponseMessage Put(int id, Question inQuestion)
         {
             if(ModelState.IsValid)
@@ -102,6 +91,7 @@ namespace FAQ.Controllers
             };
         }
 
+        //PUT api/ans/#
         [Route("ans/{id}")]
         public HttpResponseMessage Put(int id, Answer inAnswer)
         {

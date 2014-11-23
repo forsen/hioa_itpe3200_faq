@@ -103,8 +103,6 @@
                         <p>Spørsmålet er blitt sendt til vår kundeavdeling. Du vil få svar på e-posten du oppga i løpet av 48 timer.</p>
                         <p>Det er muligheter for at ditt spørsmål og vårt svar vil bli lagt ut på vår FAQ dersom vi mener at spørsmålet kan ha relevans for andre. Du vil selvfølgelig bli anonymisert.</p>
                         <p>Med vennlig hilsen Snublevann.no</p>
-                        <p>aoesntuh</p>
-
                     </div>
                     <div class="panel-default panel col-md-12" ng-show="showFAQ">
                         <div class="page-header">
@@ -116,9 +114,10 @@
                                     <h3 class="nav" ng-click="showCategoryFunction(category.id)"><span class="glyphicon {{category.glyph}}"></span> {{category.name}}</h3>
                                 </div>
                                 <div class="panel-body">                               
-                                    <div ng-repeat="q in category.questions"> 
+                                    <div ng-repeat="q in category.questions | object2array:'upvotes'"> 
                                         <a href="#" ng-click="showQuestionFunction(q)">{{q.question}}</a>
                                     </div>
+                                    <a href="#">...</a>
                                 </div>
                                 
                             </div>
@@ -129,12 +128,15 @@
                     </div>
                     <div class="panel-default panel col-md-12" ng-show="showCategory">
                         <div class="page-header">
-                            <center><h2>{{category.name}}</h2></center>
+                            <center><h2><span class="glyphicon {{category.glyph}}"></span> {{category.name}}</h2></center>
                         </div>
                         <accordion close-others="false">
-                            <accordion-group heading="{{question.question}}" ng-repeat="question in questions" is-open="status.isOpen[question.id]">
-                                <p class="lead">{{question.answer.answer}}</p>
-                                <p><small>{{question.upvotes}} personer har funnet dette spørsmålet nyttig. Fikk du svar på det du lurte på? <button class="btn btn-success" ng-click="upVote(question)"><span class="glyphicon glyphicon-thumbs-up"></span>Ja!</button> <button class="btn btn-danger" ng-click="showNewQuestionForm()"><span class="glyphicon glyphicon-thumbs-down"> Nei!</span></button></small></p>
+                            <accordion-group ng-repeat="question in category.questions|object2array:'upvotes'" is-open="status.isOpen[question.id]">
+                                <accordion-heading>
+                                    <strong>{{question.question}}</strong> 
+                                </accordion-heading>
+                                <p>{{question.answer.answer}}</p>
+                                <p><small>{{question.upvotes}} personer har funnet dette spørsmålet nyttig. Fikk du svar på det du lurte på? <button class="btn-group-xs btn btn-success" ng-click="upVote(question)"><span class="glyphicon glyphicon-thumbs-up"></span> Ja!</button> <button class="btn-group-xs btn btn-danger" ng-click="showNewQuestionForm()"><span class="glyphicon glyphicon-thumbs-down"> Nei!</span></button></small></p>
                             </accordion-group>
                         </accordion>
                     </div>
