@@ -107,6 +107,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <None Include="Properties\PublishProfiles\faq.pubxml" />
     <None Include="Scripts\LibJS\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\LibJS\bootstrap.min.js" />
     <Content Include="Scripts\LibJS\jquery-2.1.1.min.js" />
@@ -140,7 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
